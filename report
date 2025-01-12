@@ -1,0 +1,96 @@
+Project Report
+
+Overview
+This project aims to analyze and classify Instagram content while predicting post engagement metrics such as the number of likes. The project comprises two primary tasks:
+
+1. Classification: Classify Instagram usernames based on their content into predefined categories.
+2. Regression: Predict the number of likes for an Instagram post based on extracted features.
+
+Methodology
+
+1. Classification
+The goal of the classification task is to categorize Instagram accounts into specific content classes. The dataset consists of various features such as user biography, captions, and engagement-related metrics.
+
+Preprocessing Steps
+- Data Balancing: The minority class (‘Gaming’) was oversampled using the `resample` method to balance the dataset.
+- Handling Missing Values: Missing values in captions, biography, and numerical features were replaced with default values (e.g., empty strings or zeros).
+- Feature Engineering:
+  - Combined captions and biography into a single feature (‘Bio_Caption’).
+  - Removed emojis from text data using regex.
+  - Normalized numerical features (‘follower_count’, ‘following_count’, ‘post_count’, etc.) using Min-Max Scaling.
+  - One-hot encoded categorical features (‘verified_account’, ‘business_account’, ‘is_professional_account’).
+
+Model Architecture
+The classification model is a hybrid neural network combining text embeddings from DistilBERT and manually engineered features.
+
+- Text Features: Extracted contextual embeddings using DistilBERT’s pre-trained model.
+- Numerical Features: Passed through a dense layer with ReLU activation.
+- Fusion: Combined outputs from the text and numerical pipelines.
+- Final Layers:
+  - Dense layer with 256 units followed by ReLU.
+  - Output layer with softmax activation for classification into multiple classes.
+
+Training Process
+- Optimizer: AdamW with a learning rate of 5e-5.
+- Scheduler: Linear warm-up and decay.
+- Loss Function: CrossEntropyLoss.
+- Training Duration: 5 epochs with mini-batch size 16.
+
+Evaluation Metrics
+- Accuracy: Achieved by comparing predicted labels with ground truth labels.
+- Loss: Calculated using CrossEntropyLoss on test data.
+
+Results
+- Test Loss: Computed using the test dataset.
+- Test Accuracy: Measured as the ratio of correctly classified samples to the total number of samples.
+
+Inference
+Predictions for unseen test data were generated and saved in the CSV file `dfmaksimus_with_predictions.csv`. The results included predicted classes for each Instagram account.
+
+---
+
+2. Regression
+The regression task involves predicting the like count of Instagram posts using features derived from the posts and user metrics.
+
+Preprocessing Steps
+- Data Cleaning: Missing values in numerical features (‘avg_like_count’, ‘std_like_count’, etc.) were imputed with the mean using `SimpleImputer`.
+- Target Transformation: Applied a log transformation to the target variable (‘like_count’) to normalize its distribution.
+- Outlier Detection: Utilized Isolation Forest to detect and remove outliers in the dataset based on the ‘like_count’ feature.
+
+Model Architecture
+The regression model used XGBoost, a gradient boosting framework optimized for structured data.
+
+- Hyperparameters:
+  - Objective: `reg:squarederror`
+  - Evaluation Metric: `rmse`
+  - Maximum Depth: 6
+  - Learning Rate: 0.1
+  - Number of Estimators: 300
+  - Subsampling Ratio: 0.8
+  - Column Sampling Ratio: 0.8
+
+Evaluation Metrics
+- Mean Squared Error (MSE): Measures average squared differences between actual and predicted values.
+- Mean Absolute Error (MAE): Quantifies average absolute differences.
+- R-Squared: Indicates the proportion of variance in the target variable explained by the model.
+
+Results
+- Predictions were reverted to their original scale using the exponential function (‘np.expm1’).
+- MSE, MAE, and R-squared values were calculated on the original scale as well as the log-transformed scale.
+- A scatter plot was generated to visualize predicted vs. actual like counts.
+
+Inference
+- Predictions for unseen test data were generated and stored in `predicted_like_counts_for_3_median.csv`. The file contains usernames and predicted like counts.
+
+---
+
+Conclusion
+This project successfully combined machine learning techniques for both classification and regression tasks:
+- Classification leveraged deep learning models (DistilBERT) alongside engineered features to categorize Instagram accounts.
+- Regression applied a gradient boosting approach to predict post engagement.
+
+The integration of text-based features with numerical metrics proved effective for both tasks, demonstrating the value of hybrid models in social media analytics. Future improvements could involve:
+- Expanding the dataset for better generalization.
+- Incorporating advanced feature selection techniques.
+- Experimenting with alternative architectures such as transformers for regression tasks.
+
