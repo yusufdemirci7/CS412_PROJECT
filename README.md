@@ -21,29 +21,4 @@ This project analyzes Instagram content and predicts post engagement (like count
    ```bash
    git clone https://github.com/yourusername/instagram-engagement-prediction.git
    cd instagram-engagement-prediction
-Project Structure
-data/: Contains dataset and preprocessing scripts.
-models/: Includes trained models and model-building scripts for both classification and regression tasks.
-notebooks/: Jupyter notebooks for analysis and model evaluation.
-outputs/: Contains predictions and evaluation metrics.
-requirements.txt: List of dependencies for the project.
-How It Works
-Classification
-Data preprocessing steps like balancing the dataset, handling missing values, and combining captions and biographies into a single feature.
-Text embeddings extracted using DistilBERT to represent user bios and captions.
-Numerical features such as follower count, post count, etc., normalized and passed through a dense layer.
-A hybrid neural network architecture combines text and numerical features for classification.
-Model trained using AdamW optimizer with a learning rate of 5e-5 and CrossEntropyLoss.
-Regression
-Data cleaning steps such as imputing missing values and removing outliers using Isolation Forest.
-Log transformation applied to the target variable to normalize its distribution.
-XGBoost model configured for regression with hyperparameters optimized for structured data.
-Model trained to predict the like count of Instagram posts.
-Evaluation metrics such as MSE, MAE, and R-squared are calculated for model performance.
-Results
-Classification: High accuracy in categorizing Instagram accounts into predefined content categories.
-Regression: Reliable predictions of like counts with minimal error.
-Future Improvements
-Expand the dataset for better generalization.
-Experiment with transformer-based architectures for regression tasks.
-Incorporate advanced feature selection techniques for enhanced model performance.
+
