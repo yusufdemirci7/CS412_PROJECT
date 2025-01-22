@@ -17,7 +17,7 @@ This project analyzes Instagram content and predicts post engagement (like count
 - Required Python libraries: `numpy`, `pandas`, `scikit-learn`, `transformers`, `xgboost`, `torch`, `matplotlib`
 
 ## Installation
-1. Clone the repository:
+Clone the repository:
    ```bash
    git clone https://github.com/yourusername/instagram-engagement-prediction.git
    cd instagram-engagement-prediction
